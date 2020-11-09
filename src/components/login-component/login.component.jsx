@@ -55,9 +55,6 @@ class Login extends React.Component {
                         <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
                             {""}Sign In Google{""}
                         </CustomButton>
-                        <CustomButton isGoogleSignIn>
-                            {""}Sign In Facebook{""}
-                        </CustomButton>
                     </div>
                 </form>
             </div>

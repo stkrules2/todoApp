@@ -1,20 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import rootReducer from './redux/root-reducer';
-import thunk from 'redux-thunk';
-import { getFirebase, ReactReduxFirebaseProvider } from 'react-redux-firebase';
-import firebase from './firebase/firebase.utils';
+
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import { useSelector } from 'react-redux';
 import { isLoaded } from 'react-redux-firebase';
 
-const store = createStore(rootReducer, applyMiddleware(thunk.withExtraArgument({ getFirebase })));
+import { store } from './redux/store';
+
+import firebase from './firebase/firebase.utils';
+
+import './index.css';
 
 const rrfProps = {
 	firebase,
@@ -37,17 +38,15 @@ function AuthIsLoaded({ children }) {
 }
 
 ReactDOM.render(
-	<React.StrictMode>
-		<Provider store={store}>
-			<ReactReduxFirebaseProvider {...rrfProps}>
-				<BrowserRouter>
-					<AuthIsLoaded>
-						<App />
-					</AuthIsLoaded>
-				</BrowserRouter>
-			</ReactReduxFirebaseProvider>
-		</Provider>
-	</React.StrictMode>,
+	<Provider store={store}>
+		<ReactReduxFirebaseProvider {...rrfProps}>
+			<BrowserRouter>
+				<AuthIsLoaded>
+					<App />
+				</AuthIsLoaded>
+			</BrowserRouter>
+		</ReactReduxFirebaseProvider>
+	</Provider>,
 	document.getElementById('root')
 );
 
